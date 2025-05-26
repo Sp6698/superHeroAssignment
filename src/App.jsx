@@ -14,7 +14,7 @@ function App() {
 
   const handleOpenPatientDialog = () => {
     setShowPatientInfo(true)
-    setShowSideNav(false) // Close sidenav when patient dialog opens
+    setShowSideNav(false) // Close SideNav when patient dialog opens
   }
 
   const handleClosePatientDialog = () => {

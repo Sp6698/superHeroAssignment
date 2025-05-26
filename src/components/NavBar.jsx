@@ -1,5 +1,5 @@
-import React from 'react';
-import { Menu } from 'lucide-react';
+import React from 'react'
+import { Menu } from 'lucide-react'
 
 const NavBar = ({ onMenuClick }) => {
     return (
@@ -18,7 +18,7 @@ const NavBar = ({ onMenuClick }) => {
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default NavBar;
+export default NavBar
