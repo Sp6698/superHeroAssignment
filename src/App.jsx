@@ -5,16 +5,10 @@ import SideNav from './components/SideNav'
 import PatientInfo from './components/PatientInfo'
 
 function App() {
-  const [showSideNav, setShowSideNav] = useState(false)
   const [showPatientInfo, setShowPatientInfo] = useState(false)
-
-  const handleMenuClick = () => {
-    setShowSideNav(!showSideNav)
-  }
 
   const handleOpenPatientDialog = () => {
     setShowPatientInfo(true)
-    setShowSideNav(false) // Close SideNav when patient dialog opens
   }
 
   const handleClosePatientDialog = () => {
@@ -22,23 +16,17 @@ function App() {
   }
 
   return (
-    <div className='w-[100vw] h-[100vh] bg-gray-300 flex flex-col relative'>
-      <NavBar onMenuClick={handleMenuClick} />
+    <div className='w-screen h-screen bg-gray-300 flex flex-col'>
+      <NavBar />
 
-      <div className='flex-1 bg-gray-300'>
-        {/* Main content area */}
-        <div className="p-4">
-          <h2 className="text-xl font-semibold text-gray-800">Main Dashboard Content</h2>
+      <div className="flex flex-1 overflow-hidden">
+        <SideNav onOpenPatientDialog={handleOpenPatientDialog} />
+
+        <main className="flex-1 p-6 overflow-auto bg-gray-100">
+          <h1 className="text-2xl font-semibold text-gray-800">Welcome To Our WEB App</h1>
           <p className="text-gray-600 mt-2">This is where your main application content would go.</p>
-        </div>
+        </main>
       </div>
-
-      {/* Side Navigation */}
-      <SideNav
-        isOpen={showSideNav && !showPatientInfo}
-        onClose={() => setShowSideNav(false)}
-        onOpenPatientDialog={handleOpenPatientDialog}
-      />
 
       {/* Patient Info Modal */}
       {showPatientInfo && <PatientInfo onClose={handleClosePatientDialog} />}
