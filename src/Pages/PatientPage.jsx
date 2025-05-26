@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import PatientInfoDialog from '../components/PatientInfoDialog'
+import PatientInfoDialog from '../components/PatientInfo/PatientInfoDialog'
 
 const PatientPage = () => {
     const [showPatientDialog, setShowPatientDialog] = useState(false)
