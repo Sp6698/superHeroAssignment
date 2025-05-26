@@ -390,7 +390,7 @@ const PatientInfo = ({ onClose }) => {
                                             </thead>
                                             <tbody className="bg-white divide-y divide-gray-200">
                                                 {medications.map((med) => (
-                                                    <tr key={med.id} className="hover:bg-gray-50">
+                                                    <tr key={med.id} className="hover:bg-gray-50 cursor-pointer">
                                                         <td className="px-3 py-2">
                                                             <input type="checkbox" className="rounded w-3 h-3" />
                                                         </td>
