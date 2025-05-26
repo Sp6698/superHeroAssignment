@@ -6,6 +6,7 @@ import PatientInfo from './components/PatientInfo'
 
 function App() {
   const [showPatientInfo, setShowPatientInfo] = useState(false)
+  const [showSideNav, setShowSideNav] = useState(true) // open by default
 
   const handleOpenPatientDialog = () => {
     setShowPatientInfo(true)
@@ -15,20 +16,27 @@ function App() {
     setShowPatientInfo(false)
   }
 
+  const handleToggleSideNav = () => {
+    setShowSideNav(prev => !prev)
+  }
+
   return (
     <div className='w-screen h-screen bg-gray-300 flex flex-col'>
-      <NavBar />
+      <NavBar onMenuClick={handleToggleSideNav} />
 
       <div className="flex flex-1 overflow-hidden">
-        <SideNav onOpenPatientDialog={handleOpenPatientDialog} />
+        {showSideNav && (
+          <SideNav onOpenPatientDialog={handleOpenPatientDialog} />
+        )}
 
-        <main className="flex-1 p-6 overflow-auto bg-gray-100">
-          <h1 className="text-2xl font-semibold text-gray-800">Welcome To Our WEB App</h1>
-          <p className="text-gray-600 mt-2">This is where your main application content would go.</p>
+        <main className="flex-1 bg-gray-100 flex items-center justify-center overflow-auto">
+          <div className="text-center">
+            <h1 className="text-2xl font-semibold text-gray-800">Welcome To Our WEB App</h1>
+            <p className="text-gray-600 mt-2">This is where your main application content would go.</p>
+          </div>
         </main>
       </div>
 
-      {/* Patient Info Modal */}
       {showPatientInfo && <PatientInfo onClose={handleClosePatientDialog} />}
     </div>
   )

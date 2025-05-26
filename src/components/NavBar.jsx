@@ -10,6 +10,7 @@ const NavBar = ({ onMenuClick }) => {
                     className="text-black cursor-pointer hover:text-gray-700"
                     onClick={onMenuClick}
                 />
+
                 <span className="text-lg font-bold text-blue-900">Almighty</span>
             </div>
             <div>
