@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowLeft, ChevronDown, ChevronUp, Search, Edit, Trash2, Plus, MoreHorizontal, Phone, User, Calendar } from 'lucide-react';
+import { ArrowLeft, ChevronDown, ChevronUp, Search, Edit, Trash2, Plus, MoreHorizontal, Phone, User, Calendar, AlertTriangle, X } from 'lucide-react';
 
 const PatientInfo = () => {
     const [expandedSections, setExpandedSections] = useState({
@@ -21,7 +21,8 @@ const PatientInfo = () => {
             frequency: '1-1 tab/day',
             dose: 'BD',
             duration: '7 days',
-            remarks: 'Patient shows signs of fatigue and dyspnea'
+            remarks: 'Patient shows signs of fatigue and dyspnea',
+            hasAllergy: false
         },
         {
             id: 2,
@@ -30,11 +31,33 @@ const PatientInfo = () => {
             frequency: '5 ml/day',
             dose: 'OD',
             duration: '4 days',
-            remarks: 'Confirmed post HbA1c test, further monito...'
+            remarks: 'Confirmed post HbA1c test, further monito...',
+            hasAllergy: false
+        },
+        {
+            id: 3,
+            name: 'Antihypertensives',
+            type: 'Intravenous',
+            frequency: '1-1 tab/day',
+            dose: 'BD',
+            duration: '5 days',
+            remarks: 'Confirmed post HbA1c test, further monito...',
+            hasAllergy: false
+        },
+        {
+            id: 4,
+            name: 'Amoxicillin',
+            type: 'Intravenous',
+            frequency: '1-1 tab/day',
+            dose: 'OD',
+            duration: '5 days',
+            remarks: 'Confirmed post HbA1c test, further monito...',
+            hasAllergy: true
         }
     ]);
 
     const [newMedication, setNewMedication] = useState('');
+    const [allergyAlert, setAllergyAlert] = useState(null);
 
     const toggleSection = (section) => {
         setExpandedSections(prev => ({
@@ -43,8 +66,41 @@ const PatientInfo = () => {
         }));
     };
 
+    // Allergy checking system
+    const allergyDatabase = {
+        'amoxicillin': 'Penicillin Allergy',
+        'penicillin': 'Penicillin Allergy',
+        'ampicillin': 'Penicillin Allergy',
+        'peanut': 'Peanut Allergy',
+        'simvastatin': 'Statin Muscle Pain',
+        'atorvastatin': 'Statin Muscle Pain',
+        'sulfamethoxazole': 'Sulfa Drug Allergy',
+        'trimethoprim': 'Sulfa Drug Allergy'
+    };
+
+    const checkForAllergies = (medicationName) => {
+        const lowerMedName = medicationName.toLowerCase();
+        for (const [med, allergy] of Object.entries(allergyDatabase)) {
+            if (lowerMedName.includes(med)) {
+                return allergy;
+            }
+        }
+        return null;
+    };
+
     const addNewMedication = () => {
         if (newMedication.trim()) {
+            const detectedAllergy = checkForAllergies(newMedication);
+
+            if (detectedAllergy) {
+                setAllergyAlert({
+                    medication: newMedication,
+                    allergy: detectedAllergy,
+                    message: `This patient is allergic to ${detectedAllergy.toLowerCase()}-based medications, including ${newMedication}. Prescribing this medication may cause a severe allergic reaction.`
+                });
+                return;
+            }
+
             const newMed = {
                 id: medications.length + 1,
                 name: newMedication,
@@ -52,11 +108,33 @@ const PatientInfo = () => {
                 frequency: '',
                 dose: '',
                 duration: '',
-                remarks: ''
+                remarks: '',
+                hasAllergy: false
             };
             setMedications([...medications, newMed]);
             setNewMedication('');
         }
+    };
+
+    const overrideAllergy = () => {
+        const newMed = {
+            id: medications.length + 1,
+            name: allergyAlert.medication,
+            type: 'Tablet',
+            frequency: '',
+            dose: '',
+            duration: '',
+            remarks: '',
+            hasAllergy: true
+        };
+        setMedications([...medications, newMed]);
+        setNewMedication('');
+        setAllergyAlert(null);
+    };
+
+    const viewAlternatives = () => {
+        // In a real application, this would show alternative medications
+        alert('Alternative medications would be displayed here');
     };
 
     const deleteMedication = (id) => {
@@ -317,9 +395,14 @@ const PatientInfo = () => {
                                                         <input type="checkbox" className="rounded" />
                                                     </td>
                                                     <td className="px-6 py-4 whitespace-nowrap">
-                                                        <div>
-                                                            <div className="text-sm font-medium text-gray-900">{med.name}</div>
-                                                            <div className="text-sm text-gray-500">{med.type}</div>
+                                                        <div className="flex items-center">
+                                                            {med.hasAllergy && (
+                                                                <AlertTriangle className="w-4 h-4 text-red-500 mr-2" />
+                                                            )}
+                                                            <div>
+                                                                <div className="text-sm font-medium text-gray-900">{med.name}</div>
+                                                                <div className="text-sm text-gray-500">{med.type}</div>
+                                                            </div>
                                                         </div>
                                                     </td>
                                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
@@ -415,8 +498,51 @@ const PatientInfo = () => {
                     ))}
                 </div>
             </div>
+
+            {/* Allergy Alert Modal */}
+            {allergyAlert && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                    <div className="bg-white rounded-lg shadow-lg max-w-md w-full mx-4">
+                        <div className="p-6">
+                            <div className="flex items-start">
+                                <div className="flex-shrink-0">
+                                    <AlertTriangle className="h-6 w-6 text-red-500" />
+                                </div>
+                                <div className="ml-3 w-full">
+                                    <h3 className="text-lg font-medium text-red-800 mb-2">
+                                        Allergy Alert
+                                    </h3>
+                                    <div className="text-sm text-gray-700 mb-4">
+                                        {allergyAlert.message}
+                                    </div>
+                                    <div className="flex space-x-3">
+                                        <button
+                                            onClick={overrideAllergy}
+                                            className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 text-sm font-medium"
+                                        >
+                                            Override Warning
+                                        </button>
+                                        <button
+                                            onClick={viewAlternatives}
+                                            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 text-sm font-medium"
+                                        >
+                                            View Alternatives
+                                        </button>
+                                    </div>
+                                </div>
+                                <button
+                                    onClick={() => setAllergyAlert(null)}
+                                    className="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-600"
+                                >
+                                    <X className="h-5 w-5" />
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
 
-export default PatientInfo;
+export default PatientInfo; 
