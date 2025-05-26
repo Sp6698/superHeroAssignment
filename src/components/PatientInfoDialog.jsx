@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowLeft, ChevronDown, ChevronUp, Search, Edit, Trash2, Plus, MoreHorizontal, Phone, User, Calendar, AlertTriangle, X } from 'lucide-react';
 
-const PatientInfo = ({ onClose }) => {
+const PatientInfoDialog = ({ onClose }) => {
     const [expandedSections, setExpandedSections] = useState({
         vitals: true,
         diagnosis: true,
@@ -163,9 +163,9 @@ const PatientInfo = ({ onClose }) => {
     };
 
     return (
-        <div className="absolute inset-0 bg-gray-100 bg-opacity-60 backdrop-blur-sm flex justify-center items-start pt-4 z-20 overflow-auto">
+        <div className="absolute inset-0 bg-gray-100 bg-opacity-60 backdrop-blur-sm flex justify-center items-start z-20 overflow-auto">
 
-            <div className="bg-white rounded-lg shadow-xl w-full max-w-4xl mx-4 max-h-[calc(100vh-2rem)] overflow-auto">
+            <div className="bg-white shadow-xl w-full h-full overflow-auto">
                 {/* Header */}
                 <div className="bg-white border-b border-gray-200 px-4 py-3 sticky top-0 z-10">
                     <div className="flex items-center justify-between">
@@ -177,9 +177,9 @@ const PatientInfo = ({ onClose }) => {
                                 <ArrowLeft className="w-4 h-4 mr-1" />
                                 Back
                             </button>
-                            <div className="text-sm text-gray-500">Changes saved</div>
                         </div>
                         <div className="flex items-center space-x-3">
+                            <div className="text-sm text-gray-500">Changes saved</div>
                             <button className="bg-blue-600 text-white px-3 py-1.5 rounded text-sm hover:bg-blue-700 flex items-center">
                                 Actions
                                 <ChevronDown className="w-3 h-3 ml-1" />
@@ -240,26 +240,28 @@ const PatientInfo = ({ onClose }) => {
                             <input
                                 type="text"
                                 placeholder="Search Medicines Eg. Antihypertensives"
-                                className="w-full pl-9 pr-12 py-2 border border-gray-300 rounded text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                                className="w-[32vw] pl-9 pr-12 py-2 border border-gray-300 rounded text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
                             />
-                            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-xs">
+                            <div className="absolute right-180 top-1/2 transform -translate-y-1/2 text-gray-400 text-xs">
                                 ⌘/
                             </div>
                         </div>
 
-                        <div className="flex items-center space-x-3">
-                            {visitDates.map((date, index) => (
-                                <button
-                                    key={index}
-                                    className={`px-3 py-1.5 rounded text-sm font-medium ${index === 0
-                                        ? 'bg-blue-600 text-white'
-                                        : 'text-gray-600 hover:bg-gray-100 border border-gray-300'
-                                        }`}
-                                >
-                                    {date}
-                                </button>
-                            ))}
-                            <button className="text-gray-400 hover:text-gray-600 p-1">
+                        <div className="flex justify-between space-x-3">
+                            <div>
+                                {visitDates.map((date, index) => (
+                                    <button
+                                        key={index}
+                                        className={`px-3 mx-2 py-1.5 rounded text-sm font-medium ${index === 0
+                                            ? 'bg-blue-600 text-white'
+                                            : 'text-gray-600 hover:bg-gray-100 border border-gray-300'
+                                            }`}
+                                    >
+                                        {date}
+                                    </button>
+                                ))}
+                            </div>
+                            <button className="text-gray-400 hover:text-gray-600 p-1 text-right">
                                 <Calendar className="w-4 h-4" />
                             </button>
                         </div>
@@ -540,4 +542,4 @@ const PatientInfo = ({ onClose }) => {
     );
 };
 
-export default PatientInfo;
+export default PatientInfoDialog;
