@@ -34,7 +34,7 @@ const PatientHeader = ({
                         {patientData.gender}
                     </div>
                     <div className="flex items-center">
-                        <span className="mr-1">📅</span>
+                        <span className="mr-1">🎂</span>
                         {patientData.age}
                     </div>
                 </div>
