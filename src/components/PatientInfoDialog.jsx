@@ -163,9 +163,8 @@ const PatientInfoDialog = ({ onClose }) => {
     };
 
     return (
-        <div className="absolute inset-0 bg-gray-100 bg-opacity-60 backdrop-blur-sm flex justify-center items-start z-20 overflow-auto">
-
-            <div className="bg-white shadow-xl w-full h-full overflow-auto">
+        <div className="fixed inset-0 bg-opacity-10 backdrop-blur-sm flex justify-center items-start z-10 overflow-auto">
+            <div className="bg-white shadow-xl mt-10 mx-50 w-full  overflow-auto">
                 {/* Header */}
                 <div className="bg-white border-b border-gray-200 px-4 py-3 sticky top-0 z-10">
                     <div className="flex items-center justify-between">

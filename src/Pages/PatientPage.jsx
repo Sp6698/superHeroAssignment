@@ -19,7 +19,7 @@ const PatientPage = () => {
 
     return (
         <div className="relative h-full">
-            <div className={`h-full ${showPatientDialog ? 'blur-sm' : ''} transition-all duration-200`}>
+            <div className="h-full">
                 <div className="flex items-center justify-center h-full">
                     <div className="text-center">
                         <h1 className="text-3xl font-bold text-gray-800 mb-4">Patient Management</h1>

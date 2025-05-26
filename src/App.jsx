@@ -25,7 +25,7 @@ function App() {
             <Routes>
               <Route path="/" element={<MainPage />} />
               <Route path="/patients" element={<PatientPage />} />
-              <Route path="/dashboard" element={<MainPage />} />
+              <Route path="/" element={<MainPage />} />
               <Route path="/appointments" element={<div className="flex items-center justify-center h-full"><div className="text-center"><h1 className="text-2xl font-semibold text-gray-800">Appointments</h1><p className="text-gray-600 mt-2">Work in Progress...</p></div></div>} />
               <Route path="/vitals" element={<div className="flex items-center justify-center h-full"><div className="text-center"><h1 className="text-2xl font-semibold text-gray-800">Vitals</h1><p className="text-gray-600 mt-2">Work in Progress...</p></div></div>} />
               <Route path="/prescriptions" element={<div className="flex items-center justify-center h-full"><div className="text-center"><h1 className="text-2xl font-semibold text-gray-800">Prescriptions</h1><p className="text-gray-600 mt-2">Work in Progress...</p></div></div>} />

@@ -10,7 +10,7 @@ const SideNav = () => {
     const location = useLocation()
 
     const menuItems = [
-        { icon: Home, label: 'Dashboard', path: '/dashboard' },
+        { icon: Home, label: 'Dashboard', path: '/' },
         { icon: Users, label: 'Patients', path: '/patients' },
         { icon: Calendar, label: 'Appointments', path: '/appointments' },
         { icon: Activity, label: 'Vitals', path: '/vitals' },
