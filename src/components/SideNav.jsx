@@ -1,25 +1,27 @@
 import React from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import {
     Home, Users, Calendar, FileText, Settings,
     UserCheck, Activity, Pill
 } from 'lucide-react'
 
-const SideNav = ({ onOpenPatientDialog }) => {
+const SideNav = () => {
+    const navigate = useNavigate()
+    const location = useLocation()
+
     const menuItems = [
-        { icon: Home, label: 'Dashboard' },
-        { icon: Users, label: 'Patients' }, // trigger PatientInfo here
-        { icon: Calendar, label: 'Appointments' },
-        { icon: Activity, label: 'Vitals' },
-        { icon: Pill, label: 'Prescriptions' },
-        { icon: FileText, label: 'Reports' },
-        { icon: UserCheck, label: 'Staff' },
-        { icon: Settings, label: 'Settings' },
+        { icon: Home, label: 'Dashboard', path: '/dashboard' },
+        { icon: Users, label: 'Patients', path: '/patients' },
+        { icon: Calendar, label: 'Appointments', path: '/appointments' },
+        { icon: Activity, label: 'Vitals', path: '/vitals' },
+        { icon: Pill, label: 'Prescriptions', path: '/prescriptions' },
+        { icon: FileText, label: 'Reports', path: '/reports' },
+        { icon: UserCheck, label: 'Staff', path: '/staff' },
+        { icon: Settings, label: 'Settings', path: '/settings' },
     ]
 
-    const handleMenuClick = (label) => {
-        if (label === 'Patients') {
-            onOpenPatientDialog()
-        }
+    const handleMenuClick = (path) => {
+        navigate(path)
     }
 
     return (
@@ -33,8 +35,11 @@ const SideNav = ({ onOpenPatientDialog }) => {
                     {menuItems.map((item, index) => (
                         <button
                             key={index}
-                            onClick={() => handleMenuClick(item.label)}
-                            className="w-full flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:bg-blue-100 rounded-md transition"
+                            onClick={() => handleMenuClick(item.path)}
+                            className={`w-full flex items-center px-3 py-2 text-sm font-medium rounded-md transition ${location.pathname === item.path
+                                    ? 'bg-blue-100 text-blue-700'
+                                    : 'text-gray-700 hover:bg-blue-50'
+                                }`}
                         >
                             <item.icon className="w-5 h-5 mr-3" />
                             {item.label}
